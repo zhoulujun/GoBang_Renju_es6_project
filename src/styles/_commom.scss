@@ -1,0 +1,23 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+canvas{display: block;}
+
+.hide{
+  display: none;
+}
+
+.flex-box{
+  display: flex;
+  margin: 10px;
+  align-items: center;
+}
+.horizontal-justify{
+  @extend .flex-box;
+  justify-content: space-around;
+
+}
+
+
