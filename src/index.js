@@ -1,18 +1,28 @@
+/**
+ *@author Create by zhoulujun.cn
+ *@version 1.0.0
+ */
+
+
+//css
 import './styles/index.scss';
 
+
+//js
 import Player from './games/Player';
 import FiveGameChess from './games/FiveChessGame';
-import EventObj from './games/EventObj';
-import Msg from './games/Msg';
+import Message from './games/Message';
 
+
+//buttons
 let quitBtn = document.getElementById('quitBtn');
 let playerNumBtn = document.getElementById('playerNum');
 let startBtn = document.getElementById('startBtn');
 let retractBtn = document.getElementById('retractBtn');
 let recoveryBtn = document.getElementById('recoveryBtn');
-let tipsInfo = document.getElementById('tipsInfo');
 
 
+//init data
 const initProperty = {
   chessColors: ['#000', '#fff', '#0f2', '#00f'],//默认棋子可选颜色
   chessRadio: 20,//棋子半径
@@ -24,21 +34,26 @@ const initProperty = {
   focusColor: '#ff00e8'//焦点颜色
 };
 
-// EventObj.on('test',function (data) {
-//   console.log(data);
-// });
+
+
+let msg = new Message('#tipsInfo');
 let fiveGameChess = new FiveGameChess('#box',initProperty.chessboardWidth, initProperty.grid, initProperty.chessBordGridColor, initProperty.chessBordBackgroundColor);
 
+
+//game notifications
 fiveGameChess.listen('chessExist',function (x,y) {
-  console.log('chessExist');
-  tipsInfo.innerHTML='此位置已经下过了';
+  msg.showMsg('此位置已经下过了','chessExist');
 });
 
 fiveGameChess.listen('wining',function (player) {
-  tipsInfo.innerHTML=player.name+'赢了';
+  msg.showMsg(player.name+'赢了','wining');
+  retractBtn.setAttribute('disabled', 'disabled');
+  recoveryBtn.setAttribute('disabled', 'disabled');
 });
+
 fiveGameChess.listen('waitPlayer',function (player) {
-  waitPlayerDropNotify(player);
+
+  msg.showMsg('waiting '+player.name,'waitPlayer');
 });
 
 
@@ -53,6 +68,7 @@ retractBtn.addEventListener('click',function () {
   }
 
 });
+
 recoveryBtn.addEventListener('click',function () {
 
   if(fiveGameChess.recovery()){
@@ -62,8 +78,18 @@ recoveryBtn.addEventListener('click',function () {
 
 });
 
+quitBtn.addEventListener('click',function () {
+  fiveGameChess.reset();
+  startBtn.removeAttribute('disabled');
+  playerNumBtn.removeAttribute('disabled');
+  retractBtn.removeAttribute('disabled');
+  recoveryBtn.setAttribute('disabled', 'disabled');
+  quitBtn.setAttribute('disabled', 'disabled');
+
+});
+
 /**
- *@method 开始游戏事件
+ *@method for start game
  */
 
 function startGame () {
@@ -83,9 +109,7 @@ function startGame () {
 
 
 }
-
-startGame();
-
+// startGame();
 
 
 /**
@@ -111,17 +135,8 @@ function ensurePlayerArr (type) {
       }
       break;
   }
-  // console.log(arr);
-
   return arr;
 
 }
 
-/**
- *棋手下棋提醒
- * @param player
- */
 
-function waitPlayerDropNotify(player){
-  tipsInfo.innerHTML='waiting '+player.name;
-}

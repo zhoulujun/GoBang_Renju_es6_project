@@ -1,4 +1,12 @@
 /**
+ *@author Create by zhoulujun.cn
+ *@version 1.0.0
+ *@description 棋手类
+ */
+
+
+
+/**
  *@class Player 棋手
  */
 class Player {

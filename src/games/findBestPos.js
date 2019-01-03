@@ -1,4 +1,11 @@
 /**
+ *@author Create by zhoulujun.cn
+ *@version 1.0.0
+ *@description 人机对战，寻找最佳落子点
+ */
+
+
+/**
  *寻找最佳得分位置 Analysis Advantage function
  * #算法说明：1、寻找4个方向的连续位置，并去除无效位置；2、在有效位置中，寻找可以在其他方向可以拓展的位置
  * @param chessPosArr {Array} 棋盘格二维数组chessPosArr[x][y]
@@ -16,7 +23,7 @@ export function findBestPos2DropByLoop(chessPosArr,claimID,competitorID){
   let consecutiveLeft = 0;
 
 
-  //存放活一、活二、活三、活四坐标数组
+  //存放活一、活二、活三、活四坐标数组,存数组，是因为可以对四个方向再次运算，计算出最佳位置
   let attackArrConsecutivePos={
     x: [[],[],[],[]],
     y: [[],[],[],[]],
@@ -48,7 +55,7 @@ export function findBestPos2DropByLoop(chessPosArr,claimID,competitorID){
       } else {
         if((posID===0||posID===null||posID===false)&&consecutiveNum!==0&&consecutiveNum<5){
           arr[consecutiveNum-1].push([x,y]);
-          //Todo 死角优化
+          //todo 死角优化
           /* switch (type) {
              case 'x+':
                if(x+4-consecutiveNum<chessGrid-1){
@@ -205,7 +212,8 @@ export function findBestPos2DropByReg(chessPosArr,claimID,competitorID){
   let chessGrid = chessPosArr.length;
   //正则集合
   let regArr=[
-    //
+
+
   ];
   function getPos(id) {
   }
@@ -275,7 +283,7 @@ export function findBestPos2DropByReg(chessPosArr,claimID,competitorID){
 
 }
 
-//理论上，比如四连点，筛除死角，选出交叉点
+//筛选出最佳落子点：比如四连点，筛除死角，选出交叉点
 function getBestPosFromConsecutivePos (attackArrConsecutivePos,blockadeArrConsecutivePos,chessPosArr) {
   let keys=Object.keys(attackArrConsecutivePos);
   let pos={x: 0,y: 0};

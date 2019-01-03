@@ -45,7 +45,7 @@
     "no-extra-parens": 1,                     //多余的括号
     "no-empty": 1,                            //空代码块
     "no-use-before-define": [1, "nofunc"],    //使用前未定义
-    "complexity": [1, 15],                    //圈复杂度大于15 警告
+    "complexity": [1, 25],                    //圈复杂度大于25 警告
 
 
 
@@ -93,7 +93,7 @@
     "no-useless-concat": 2,                   //无意义的string concat
     "no-void": 2,                             //禁用void
     "no-with": 2,                             //禁用with
-    "no-warning-comments": [1, { "terms": ["todo", "fixme", "any other term"], "location": "anywhere" }],//标记未写注释
+    "no-warning-comments": [1, { "terms": ["fixme", "any other term"], "location": "anywhere" }],//标记未写注释
     "curly": 2,                               //if、else、while、for代码块用{}包围
     "one-var": 0,
     "no-multiple-empty-lines": [1, {"max": 4, "maxEOF": 3}],  //空行 最多三行

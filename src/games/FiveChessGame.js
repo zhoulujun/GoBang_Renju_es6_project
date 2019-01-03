@@ -1,3 +1,11 @@
+/**
+ *@author Create by zhoulujun.cn
+ *@version 1.0.0
+ *@description 五指棋类
+ */
+
+
+
 import Until from '../games/Until';
 import EventListen from '../games/EventListen';
 import Chess from '../games/Chess';
@@ -7,7 +15,7 @@ import {findBestPos2DropByLoop,findBestPos2DropByReg} from '../games/findBestPos
 
 class FiveChessGame extends EventListen {
   /**
-   * @param contentSelect {String} canvas插入box
+   * @param contentSelect {String} canvas插入box的 选择器
    * @param chessBoardWidth {number} 棋盘宽度
    * @param gridCount {number} 棋盘格数
    * @param gridColor {string} 棋盘格颜色
@@ -15,14 +23,13 @@ class FiveChessGame extends EventListen {
    * @param chessRadius {number} 棋盘背景颜色
    * @param focusColor {string} 焦点颜色
    */
-  constructor (contentSelect, chessBoardWidth = 600, gridCount = 15, gridColor = '#333', chessBordBackground = '#ddd', chessRadius, focusColor = '#c97526') {
+  constructor (contentSelect,chessBoardWidth = 600, gridCount = 15, gridColor = '#333', chessBordBackground = '#ddd', chessRadius=10, focusColor = '#c97526') {
     super(null);
     /*初始化公共数据*/
     this.foucusColor = focusColor;
     this.chessBoardWidth = chessBoardWidth;
     this.gridCount = gridCount;
     this.gridColor = gridColor;
-
     // this.gridWidth = (chessBoardWidth - (gridCount + 2)) / (gridCount + 1);
     // this.canvasWidth = chessBoardWidth - this.gridWidth * 2 - 2;
     this.gridWidth = this.chessBoardWidth / this.gridCount;
@@ -31,23 +38,6 @@ class FiveChessGame extends EventListen {
     // console.log(`gridWidth:${this.gridWidth};chessRadius:${this.chessRadius}`);
 
 
-    /*下棋数据*/
-    //棋手数据
-    this.playersArr = [];
-    //棋子数据
-    this.chessArr = [];
-    //撤销棋子数据；
-    this.reduceArr = [];
-    //棋子位置数据
-    // this.chessesPosArr = new Array(gridCount).fill(new Array(gridCount).fill(null));  bug
-    this.chessesPosArr = (new Array(gridCount).fill([])).map((item) => {
-      // return new Array(gridCount).fill(null);
-      return new Array(gridCount).fill(0);
-      // return new Array(gridCount).fill(false); //不为null：join()数组转字符串，直接无视；不为0: 避免id=0的情况;false存储也是转数字(JVM)
-    });
-
-    //暂停
-    this.suspendFlag=false;
     //时间
     // this.playersInitColorsArr = {};
     // this.suspend=false;
@@ -89,8 +79,34 @@ class FiveChessGame extends EventListen {
 
   }
 
+  /**
+   *初始化游戏数据
+   */
+  initData(){
+    //暂停
+    this.suspendFlag=false;
+    /*下棋数据*/
+    //棋手数据
+    this.playersArr = [];
+    //棋子数据
+    this.chessArr = [];
+    //撤销棋子数据；
+    this.reduceArr = [];
+    //棋子位置数据
+    // this.chessesPosArr = new Array(gridCount).fill(new Array(gridCount).fill(null));  bug
+    this.chessesPosArr = (new Array(this.gridCount).fill([])).map((item) => {
+      // return new Array(gridCount).fill(null);
+      return new Array(this.gridCount).fill(0);
+      // return new Array(gridCount).fill(false); //不为null：join()数组转字符串，直接无视；不为0: 避免id=0的情况;false存储也是转数字(JVM)
+    });
+  }
 
+  /***
+   *启动函数
+   * @param playerArr {Array} 棋手数组
+   */
   start (playerArr) {
+    this.initData();
     this.playersArr = playerArr;
    /* this.playersArr.forEach((player) => {
       this.playersInitColorsArr[player.id] = player.chessColor;
@@ -107,11 +123,18 @@ class FiveChessGame extends EventListen {
   }
 
   /**
+   *重置游戏
+   */
+  reset(){
+    this.ctxChess.clearRect(0, 0, this.chessBoardWidth, this.chessBoardWidth);
+    this.initData();
+  }
+  /**
    *撤销棋局
    * @returns {boolean}
    */
   retract () {
-    //如果暂停状态，禁止悔棋，减少算法复杂度
+    //如果暂停状态，禁止悔棋
     if(this.suspendFlag){
       return false;
     }
@@ -255,6 +278,13 @@ class FiveChessGame extends EventListen {
     }
   }
 
+  /**
+   *判断棋局输赢
+   * @param player {Player} 棋手
+   * @param x {number} x轴坐标
+   * @param y {number} y轴坐标
+   * @return {boolean}
+   */
   checkWin(player,x,y){
     // if(player.name==='ME'||player.name==='OPPONENT'){
       if(this.chessArr.length>8){

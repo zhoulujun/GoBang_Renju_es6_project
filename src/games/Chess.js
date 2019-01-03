@@ -1,4 +1,10 @@
 /**
+ *@author Create by zhoulujun.cn
+ *@version 1.0.0
+ *@description 棋子
+ */
+
+/**
  *@class Chess 棋子
  **/
 class Chess {

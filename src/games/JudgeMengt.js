@@ -1,4 +1,9 @@
-//
+/**
+ *@author Create by zhoulujun.cn
+ *@version 1.0.0
+ *@description 判断棋局输赢方法
+ */
+
 /**
  * 基于落子位置，就水平、垂直、45度、135度四个方向方向拓展，是否5子相连。
  * @param chessPosArr {Array} 棋盘格二维数组
@@ -10,6 +15,13 @@
 export function judgementByDropPos(chessPosArr,id, xPos, yPos,) {
   //棋盘格数
   let chessGrid = chessPosArr.length;
+
+  /*// 多线程封装  函数
+  if(Worker){
+    //Todo
+    let worker=new Worker('');
+
+  }*/
   //棋子相同接连连续数
   let count = 1;
   //水平方向 x++，往后查看5步，是否跟是否当前棋手落子，不是跳出循环。
@@ -109,7 +121,8 @@ export function judgementByDropPos(chessPosArr,id, xPos, yPos,) {
 }
 
 /**
- * 基于棋盘位置判断，四个方向，是否有5棋子连续
+ * 基于棋盘所有落子，loop是否有五子相连
+ * ——对人机对战，可以基于此拓展
  * @param chessPosArr {Array} 棋盘格二维数组chessPosArr[x][y]
  * @param id {number} 棋手ID
  * @returns {boolean} 输赢结果，默认false
@@ -219,8 +232,3 @@ export function judgementAllPos( chessPosArr,id) {
 
   return false;
 }
-
-
-
-
-

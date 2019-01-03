@@ -1,5 +1,7 @@
 /**
- *事件监听
+ *@author Create by zhoulujun.cn
+ *@version 1.0.0
+ *@description 事件
  */
 
 class EventListen {

@@ -1,3 +1,10 @@
+/**
+ *@author Create by zhoulujun.cn
+ *@version 1.0.0
+ *@description 通用方法类
+ */
+
+
 class Until {
 
 
